@@ -1,0 +1,54 @@
+﻿<!doctype html>
+<html>
+<head>
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/baiduTemplate.js"></script>
+</head>
+<body>
+
+<article class="blogs">
+    <h2 class="title_tj">
+    <p>文章<span>推荐</span></p>
+  </h2>
+	<div class="newblog left">
+        <!--左left开始-->
+        <div class="oneblog">
+        </div>
+</article>
+<footer>
+    <p class="ft-copyright">个人博客 Sunshine </p>
+    <div id="tbox"> <a id="togbook" href=""></a> <a id="gotop" href="javascript:void(0)"></a></div>
+</footer>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script>
+    $(document).ready(() => {
+        $.get('/getChapterList', (data) => {
+            // console.log(data);
+            data = JSON.parse(data);
+            data.forEach((d, index) => {
+                var listNode = `<div class="oneblog">
+                        <h2><a title="${d.chapterName}" href="/detail?chapterId=${d.chapterId}">${d.chapterName}</a></h2>
+                        <figure><img src='${d.imgPath}' border='0' width='120' height='120' alt='${d.chapterName}'></figure>
+                        <ul class="nlist">
+                            <p>${d.chapterDes}</p>
+                            <a title="${d.chapterName}" href="/detail?chapterId=${d.chapterId}" target="_blank" class="readmore">阅读全文>></a>
+                        </ul>
+                        <p class="dateview">
+                            <span>发布时间：${d.publishTimer}</span>
+                            <span>作者：${d.author}</span>
+                            <span>分类：[<a href="##">悠客</a>]</span>
+                            <span class="nl">浏览（${d.views})</span>
+                            <span class="n2">评论（<a href="##">0</a>）</span>
+                            <div class="line"></div>
+                        </p>
+                        </div>`
+                        $(".newblog").append(listNode);
+            });
+            
+        });
+    });
+</script>
+</html>
